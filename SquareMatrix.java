@@ -36,19 +36,19 @@ public class SquareMatrix {
      * from the ranage 0.0 to 1.0 (floats).
      */
     public SquareMatrix (int size) {
-	matrix = new float[size][size];
-	Random r = new Random();
+        matrix = new float[size][size];
+        Random r = new Random();
 
-	for (int i = 0; i < size; i++) {
-	    for (int j = 0; j < size; j++) {
-		if (i == j) {
-		    matrix[i][j] = 0;
-		    continue;
-		}
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+            if (i == j) {
+                matrix[i][j] = 0;
+                continue;
+            }
 
-		matrix[i][j] = r.nextFloat();
-	    }
-	}
+            matrix[i][j] = r.nextFloat();
+            }
+        }
     }
 
     /*
@@ -98,13 +98,13 @@ public class SquareMatrix {
 
 	for (int i = 0; i < matrix.length; ++i) {
 	    if (matrix[i].length != m.matrix[i].length) {
-		return false;
+		    return false;
 	    }
 
 	    for (int j = 0; j < matrix[i].length; ++j) {
-		if (matrix[i][j] != m.matrix[i][j]) {
-		    return false;
-		}
+            if (matrix[i][j] != m.matrix[i][j]) {
+                return false;
+            }
 	    }
 	}
 
@@ -122,9 +122,25 @@ public class SquareMatrix {
      * performance optimizations.
      */
     public SquareMatrix getShortcutMatrixBaseline () {
+
+        int size = this.matrix.length;
+        SquareMatrix r = new SquareMatrix(size);
+
+        for(int i = 0; i < size-1; i++){
+            for(int j = 0; j < size-1; j++){
+
+                float min_k = this.matrix[i][0] + this.matrix[0][j];
+                for(int k = 1; k < size-1; k++){
+                    if((this.matrix[i][k] + this.matrix[k][j]) < min_k){
+                        min_k = this.matrix[i][k] + this.matrix[k][j];
+                    }
+                }
+                r.matrix[i][j] = min_k;
+            } 
+        }
 	
-	// replace this with something correct!
-	return new SquareMatrix(matrix.length);
+        // return shortcut array
+        return r;
     }
 
     /*
