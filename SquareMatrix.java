@@ -126,11 +126,11 @@ public class SquareMatrix {
         int size = this.matrix.length;
         SquareMatrix r = new SquareMatrix(size);
 
-        for(int i = 0; i < size-1; i++){
-            for(int j = 0; j < size-1; j++){
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size; j++){
 
                 float min_k = this.matrix[i][0] + this.matrix[0][j];
-                for(int k = 1; k < size-1; k++){
+                for(int k = 1; k < size; k++){
                     if((this.matrix[i][k] + this.matrix[k][j]) < min_k){
                         min_k = this.matrix[i][k] + this.matrix[k][j];
                     }
