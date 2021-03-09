@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 public class MatrixTester {
-    public static final int[] TEST_SIZES = {128, 256, 512, 1024};
+    public static final int[] TEST_SIZES = {128, 256, 512, 1024, 2048};
 
     public static void runTests () {
 	for (int size : TEST_SIZES) {

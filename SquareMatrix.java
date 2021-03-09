@@ -121,27 +121,34 @@ public class SquareMatrix {
      * This method computes r as above directly without any
      * performance optimizations.
      */
+
     public SquareMatrix getShortcutMatrixBaseline () {
 
-        int size = this.matrix.length;
-        SquareMatrix r = new SquareMatrix(size);
-
-        for(int i = 0; i < size; i++){
-            for(int j = 0; j < size; j++){
-
-                float min_k = this.matrix[i][0] + this.matrix[0][j];
-                for(int k = 1; k < size; k++){
-                    if((this.matrix[i][k] + this.matrix[k][j]) < min_k){
-                        min_k = this.matrix[i][k] + this.matrix[k][j];
-                    }
+        int size = matrix.length;
+        
+        float[][] shortcuts = new float[size][size];
+    
+        for (int i = 0; i < size; ++i) {
+            for (int j = 0; j < size; ++j) {
+    
+            float min = Float.MAX_VALUE;
+            
+            for (int k = 0; k < size; ++k) {
+                float x = matrix[i][k];
+                float y = matrix[k][j];
+                float z = x + y;
+    
+                if (z < min) {
+                min = z;
                 }
-                r.matrix[i][j] = min_k;
-            } 
+            }
+    
+            shortcuts[i][j] = min;
+            }
         }
-	
-        // return shortcut array
-        return r;
-    }
+        
+        return new SquareMatrix(shortcuts);
+        }
 
     /*
      * Return a two dimensional array r of shortcut distances for this
@@ -155,7 +162,33 @@ public class SquareMatrix {
      */
     public SquareMatrix getShortcutMatrixOptimized () {
 
-	// replace this with something correct and efficient!
-	return new SquareMatrix(matrix.length);
+        int size = matrix.length;
+        float[][] shortcuts = new float[size][size];
+
+        
+        for(int j = 0; j < size; j++){
+
+            float[] temp = new float[size];
+            for(int i = 0; i < size; i++){
+                temp[i] = matrix[i][j];
+            }
+
+            for (int i = 0; i < size; i++){
+                float min_k = matrix[i][0] + temp[0];
+                for(int k = 1; k < size; k++){
+                    float shortcut = matrix[i][k] + temp[k];
+                    if(shortcut < min_k){
+                        min_k = shortcut;
+                    }
+                }
+                shortcuts[i][j] = min_k;
+            }
+
+        } 
+        
+	
+        // return shortcut array
+        return new SquareMatrix(shortcuts);
+
     }
 }
