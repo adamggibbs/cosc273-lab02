@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.lang.Runtime; 
 
 /*
  * SquareMatrix: a class representing a square matrix (2d array) of
@@ -164,27 +165,51 @@ public class SquareMatrix {
 
         int size = matrix.length;
         float[][] shortcuts = new float[size][size];
-
         
-        for(int j = 0; j < size; j++){
 
-            float[] temp = new float[size];
-            for(int i = 0; i < size; i++){
-                temp[i] = matrix[i][j];
-            }
+        int num_threads = Runtime.getRuntime().availableProcessors();
 
-            for (int i = 0; i < size; i++){
-                float min_k = matrix[i][0] + temp[0];
-                for(int k = 1; k < size; k++){
-                    float shortcut = matrix[i][k] + temp[k];
-                    if(shortcut < min_k){
-                        min_k = shortcut;
-                    }
-                }
-                shortcuts[i][j] = min_k;
-            }
+        //int iterations_i = size / num_threads;
 
-        } 
+        Thread[] threads = new Thread[num_threads];
+
+        for(int t = 0; t < num_threads; t++){
+            //threads[t] = new Thread (new ShortcutThread(shortcuts, matrix, t*iterations_i, iterations_i));
+            threads[t] = new Thread (new ShortcutThread(shortcuts, matrix, t, num_threads));
+        }
+        //int t = num_threads-1;
+        //threads[t] = new Thread( new ShortcutThread(shortcuts, matrix, t*iterations_i, size - t*iterations_i));
+        //threads[t] = new Thread( new ShortcutThread(shortcuts, matrix, t*iterations_i, size - t*iterations_i));
+
+        for(Thread thread: threads){
+            thread.start();
+        }
+
+        for(Thread thread: threads){
+            try{
+                thread.join();
+            } catch(InterruptedException ignored){}
+        }
+        
+        // for(int j = 0; j < size; j++){
+
+        //     float[] temp = new float[size];
+        //     for(int i = 0; i < size; i++){
+        //         temp[i] = matrix[i][j];
+        //     }
+
+        //     for (int i = 0; i < size; i++){
+        //         float min_k = matrix[i][0] + temp[0];
+        //         for(int k = 1; k < size; k++){
+        //             float shortcut = matrix[i][k] + temp[k];
+        //             if(shortcut < min_k){
+        //                 min_k = shortcut;
+        //             }
+        //         }
+        //         shortcuts[i][j] = min_k;
+        //     }
+
+        // } 
         
 	
         // return shortcut array
