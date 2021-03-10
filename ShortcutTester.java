@@ -1,6 +1,6 @@
 public class ShortcutTester {
     public static final int NUM_TESTS = 1;
-    public static final int[] TEST_SIZES = {128, 256, 512, 1024, 2048};
+    public static final int[] TEST_SIZES = {128, 256, 512, 1024, 1235, 2048};
 
     public static void runTest (int size) {
 	long avg = 0;

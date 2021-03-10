@@ -1,6 +1,5 @@
 public class ShortcutThread implements Runnable{
 
-    //public float[][] shortcuts_output;
     public float[][] shortcuts;
     private float[][] matrix;
     private int size;
@@ -9,7 +8,6 @@ public class ShortcutThread implements Runnable{
 
     public ShortcutThread(float[][] shortcuts, float[][] matrix, int id, int num_threads){
 
-        //this.shortcuts_output = shortcuts_output;
         this.shortcuts = shortcuts;
         this.matrix = matrix;
         this.size = matrix.length;
@@ -22,8 +20,6 @@ public class ShortcutThread implements Runnable{
     }
 
     public void run(){
-
-        //float[][] these_shortcuts = new float[iterations_i][size];
 
         for(int j = 0; j < size; j++){
 
@@ -45,9 +41,5 @@ public class ShortcutThread implements Runnable{
 
         }
 
-        //shortcuts_output = these_shortcuts;
-        // for (int i = start_i; i < start_i + iterations_i; i++){
-        //     shortcuts[i] = these_shortcuts[i-start_i];
-        // }
     }
 }
