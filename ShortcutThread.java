@@ -23,7 +23,7 @@ public class ShortcutThread implements Runnable{
 
     public void run(){
 
-        float[][] these_shortcuts = new float[iterations_i][size];
+        //float[][] these_shortcuts = new float[iterations_i][size];
 
         for(int j = 0; j < size; j++){
 
@@ -40,14 +40,14 @@ public class ShortcutThread implements Runnable{
                         min_k = shortcut;
                     }
                 }
-                these_shortcuts[i-start_i][j] = min_k;
+                shortcuts[i][j] = min_k;
             }
 
         }
 
         //shortcuts_output = these_shortcuts;
-        for (int i = start_i; i < start_i + iterations_i; i++){
-            shortcuts[i] = these_shortcuts[i-start_i];
-        }
+        // for (int i = start_i; i < start_i + iterations_i; i++){
+        //     shortcuts[i] = these_shortcuts[i-start_i];
+        // }
     }
 }
