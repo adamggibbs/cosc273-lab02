@@ -1,20 +1,22 @@
 public class ShortcutThread implements Runnable{
 
-    public float[][] shortcuts;
-    private float[][] matrix;
-    private int size;
-    private int start_i;
-    private int iterations_i;
+    private float[][] shortcuts;
+    final private float[][] matrix;
+    final private int size;
+    final private int start_i;
+    final private int iterations_i;
 
     public ShortcutThread(float[][] shortcuts, float[][] matrix, int id, int num_threads){
 
         this.shortcuts = shortcuts;
         this.matrix = matrix;
         this.size = matrix.length;
-        this.iterations_i = size/num_threads;
-        this.start_i = id*iterations_i;
         if(id == num_threads - 1){
+            this.start_i = id*(size/num_threads);
             this.iterations_i = size - start_i;
+        } else {
+            this.iterations_i = size/num_threads;
+            this.start_i = id*iterations_i;
         }
 
     }

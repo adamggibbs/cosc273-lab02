@@ -163,10 +163,10 @@ public class SquareMatrix {
      */
     public SquareMatrix getShortcutMatrixOptimized () {
 
-        int size = matrix.length;
+        final int size = matrix.length;
         float[][] shortcuts = new float[size][size];
 
-        int num_threads = Runtime.getRuntime().availableProcessors();
+        final int num_threads = Runtime.getRuntime().availableProcessors();
 
         Thread[] threads = new Thread[num_threads];
 
