@@ -163,27 +163,33 @@ public class SquareMatrix {
      */
     public SquareMatrix getShortcutMatrixOptimized () {
 
+        // get size of the matrix and create a shortcut array
         final int size = matrix.length;
         float[][] shortcuts = new float[size][size];
 
+        // find how many processors are available to use
         final int num_threads = Runtime.getRuntime().availableProcessors();
 
+        // create an array to store num_threads new threads
         Thread[] threads = new Thread[num_threads];
 
+        // create a ShortcutThread for each thread available
         for(int t = 0; t < num_threads; t++){
             threads[t] = new Thread (new ShortcutThread(shortcuts, matrix, t, num_threads));
         }
 
+        // start all the threads
         for(Thread thread: threads){
             thread.start();
         }
 
+        // wait for all the threads to finish 
         for(Thread thread: threads){
             try{
                 thread.join();
             } catch(InterruptedException ignored){}
         }
-	
+
         // return shortcut array
         return new SquareMatrix(shortcuts);
 
